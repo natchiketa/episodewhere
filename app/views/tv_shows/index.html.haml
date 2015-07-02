@@ -1,0 +1,17 @@
+%h1 Listing tv_shows
+
+%div{"ng-controller" => "TvShowsIndexController"}
+  %table
+    %thead
+      %tr
+        %th id
+        %th title
+
+    %tbody
+      %tr{"ng-repeat" => "tv_show in tvShows"}
+        %td {{tv_show.id}}
+        %td {{tv_show.title}}
+
+%br
+
+= link_to 'New Tv show', new_tv_show_path
