@@ -8,6 +8,9 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 
+gem 'angularjs-rails'
+gem 'angularjs-rails-resource', '~> 2.0.0'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
