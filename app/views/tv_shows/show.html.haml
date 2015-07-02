@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @tv_show.title
+
+= link_to 'Edit', edit_tv_show_path(@tv_show)
+\|
+= link_to 'Back', tv_shows_path
