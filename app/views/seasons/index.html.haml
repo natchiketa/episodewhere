@@ -1,0 +1,19 @@
+%h1 Listing seasons
+
+%div{"ng-controller" => "SeasonsIndexController"}
+  %table
+    %thead
+      %tr
+        %th id
+        %th s
+        %th tv_show_id
+
+    %tbody
+      %tr{"ng-repeat" => "season in seasons"}
+        %td {{season.id}}
+        %td {{season.s}}
+        %td {{season.tv_show_id}}
+
+%br
+
+= link_to 'New Season', new_season_path

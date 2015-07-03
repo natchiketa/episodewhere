@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b S:
+  = @season.s
+%p
+  %b Tv show:
+  = @season.tv_show
+
+= link_to 'Edit', edit_season_path(@season)
+\|
+= link_to 'Back', seasons_path
