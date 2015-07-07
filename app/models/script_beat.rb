@@ -1,5 +1,6 @@
 class ScriptBeat < ActiveRecord::Base
   belongs_to :episode
+  has_many :script_beat_characters
   has_many :characters, through: :script_beat_characters
 
   enum beat_type: [
