@@ -7,10 +7,10 @@
           %li= msg
 
   .field
-    = f.label :s
-    = f.number_field :s
+    = f.label :sequence
+    = f.number_field :sequence
   .field
     = f.label :tv_show
-    = f.text_field :tv_show
+    = f.select :tv_show_id, TvShow.all.collect {|show| [ show.title, show.id ]}
   .actions
     = f.submit 'Save'

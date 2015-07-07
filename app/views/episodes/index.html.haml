@@ -1,0 +1,24 @@
+%h1 Listing episodes
+
+%div{"ng-controller" => "EpisodesIndexController"}
+  %table
+    %thead
+      %tr
+        %th id
+        %th sequence
+        %th title
+        %th prod_code
+        %th plot
+        %th season
+
+    %tbody
+      %tr{"ng-repeat" => "episode in episodes"}
+        %td {{episode.id}}
+        %td {{episode.sequence}}
+        %td {{episode.title}}
+        %td {{episode.plot}}
+        %td {{episode.season}}
+
+%br
+
+= link_to 'New Episode', new_episode_path

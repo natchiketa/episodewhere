@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Start line:
+  = @script_beat.start_line
+%p
+  %b Beat type:
+  = @script_beat.beat_type
+%p
+  %b Content:
+  = @script_beat.content
+%p
+  %b Episode:
+  = @script_beat.episode
+
+= link_to 'Edit', edit_script_beat_path(@script_beat)
+\|
+= link_to 'Back', script_beats_path

@@ -1,0 +1,23 @@
+%h1 Listing script_beat_characters
+
+%table
+  %thead
+    %tr
+      %th Script beat
+      %th Character
+      %th
+      %th
+      %th
+
+  %tbody
+    - @script_beat_characters.each do |script_beat_character|
+      %tr
+        %td= script_beat_character.script_beat
+        %td= script_beat_character.character
+        %td= link_to 'Show', script_beat_character
+        %td= link_to 'Edit', edit_script_beat_character_path(script_beat_character)
+        %td= link_to 'Destroy', script_beat_character, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Script beat character', new_script_beat_character_path

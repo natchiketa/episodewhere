@@ -1,0 +1,27 @@
+%h1 Listing script_beats
+
+%table
+  %thead
+    %tr
+      %th Start line
+      %th Beat type
+      %th Content
+      %th Episode
+      %th
+      %th
+      %th
+
+  %tbody
+    - @script_beats.each do |script_beat|
+      %tr
+        %td= script_beat.start_line
+        %td= script_beat.beat_type
+        %td= script_beat.content
+        %td= script_beat.episode
+        %td= link_to 'Show', script_beat
+        %td= link_to 'Edit', edit_script_beat_path(script_beat)
+        %td= link_to 'Destroy', script_beat, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Script beat', new_script_beat_path

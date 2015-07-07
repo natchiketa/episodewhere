@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Episode:
+  = @episode.episode
+%p
+  %b Title:
+  = @episode.title
+%p
+  %b Prod code:
+  = @episode.prod_code
+%p
+  %b Plot:
+  = @episode.plot
+%p
+  %b Season:
+  = @episode.season
+
+= link_to 'Edit', edit_episode_path(@episode)
+\|
+= link_to 'Back', episodes_path

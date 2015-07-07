@@ -1,5 +1,4 @@
-services = angular.module 'ewApp.services', []
-services.factory 'TvShow', ['RailsResource', (RailsResource) ->
+@ewServices.factory 'TvShow', ['RailsResource', (RailsResource) ->
   class TvShow extends RailsResource
     @configure
       url: '/tv_shows',

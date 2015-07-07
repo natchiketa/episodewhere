@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Script beat:
+  = @script_beat_character.script_beat
+%p
+  %b Character:
+  = @script_beat_character.character
+
+= link_to 'Edit', edit_script_beat_character_path(@script_beat_character)
+\|
+= link_to 'Back', script_beat_characters_path

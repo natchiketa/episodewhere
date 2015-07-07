@@ -1,0 +1,22 @@
+= form_for @script_beat do |f|
+  - if @script_beat.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@script_beat.errors.count, "error")} prohibited this script_beat from being saved:"
+      %ul
+        - @script_beat.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :start_line
+    = f.number_field :start_line
+  .field
+    = f.label :beat_type
+    = f.select :beat_type, ScriptBeat.beat_types.keys.each_with_index.map{|w,idx| [w.humanize, idx]}
+  .field
+    = f.label :content
+    = f.text_area :content, rows: 10
+  .field
+    = f.label :episode
+    = f.text_field :episode
+  .actions
+    = f.submit 'Save'
