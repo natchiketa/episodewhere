@@ -26,6 +26,9 @@ gem 'haml-rails'
 gem 'pg'
 gem 'puma'
 
+gem 'multi_json'
+gem 'srt', github: 'cpetersen/srt'
+
 group :development do
   gem 'better_errors'
   gem 'html2haml'

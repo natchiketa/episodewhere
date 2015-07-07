@@ -88,6 +88,32 @@ namespace :import_script do
     end
   end
 
+  desc "Parse dialogue beats from an SRT subtitles file"
+  task srt: :environment do
+    filepath = ENV['FILE']
+    season   = Integer(ENV['SN'] || 0)
+    episode  = Integer(ENV['EP'] || 0)
+
+    throw "'FILE', 'SN' and 'EP' are all required" unless filepath && episode > 0 && season > 0
+
+    episode = Episode.find_by(
+      sequence: episode,
+      season: Season.find_by(sequence: season)
+    )
+
+    file = SRT::File.parse(File.new(filepath))
+    file.lines.each do |line|
+      script_beat = ScriptBeat.create(
+        start_line: line.sequence,
+        start_time: line.start_time,
+        end_time: line.end_time,
+        beat_type: :dialogue,
+        content: line.text.join(" "),
+        episode: episode
+      )
+    end
+  end
+
   def indent_count(line)
     matches = line.match(/^(\t+)(.*)/)
     return 0 unless matches.length > 2 && matches[1].split('').uniq == "\t"

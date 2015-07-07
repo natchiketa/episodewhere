@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703201928) do
+ActiveRecord::Schema.define(version: 20150707081007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 20150703201928) do
     t.integer  "episode_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal  "start_time"
+    t.decimal  "end_time"
   end
 
   add_index "script_beats", ["episode_id"], name: "index_script_beats_on_episode_id", using: :btree
