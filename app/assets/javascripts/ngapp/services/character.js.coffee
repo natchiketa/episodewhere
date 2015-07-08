@@ -1,7 +1,7 @@
-@ewServices.factory 'ScriptBeat', ['RailsResource', (RailsResource) ->
-  class ScriptBeat extends RailsResource
+@ewServices.factory 'Character', ['RailsResource', (RailsResource) ->
+  class Character extends RailsResource
     @configure
-      url: '/script_beats',
-      name: 'script_beat'
+      url: '/characters',
+      name: 'character'
 ]
 

@@ -1,16 +1,27 @@
 class EpisodesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_episode, only: [:show, :edit, :update, :destroy]
+  before_action :set_episode, only: [:show, :edit, :beats, :update, :destroy]
 
   # GET /episodes
   # GET /episodes.json
   def index
     @episodes = Episode.all
+
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: @episodes, each_serializer: EpisodePreviewSerializer
+      }
+    end
   end
 
   # GET /episodes/1
   # GET /episodes/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @episode }
+    end
   end
 
   # GET /episodes/new
@@ -20,6 +31,45 @@ class EpisodesController < ApplicationController
 
   # GET /episodes/1/edit
   def edit
+  end
+
+  # GET /episodes/1/beats
+  def beats
+
+  end
+
+  #TODO: Fix dumb HTTP responses
+  def connect
+    vlc = VLC::System.new('127.0.0.1', 9999, auto_start: false)
+    vlc.server.start unless vlc.server.running?
+    vlc.client.connect unless vlc.client.connected?
+
+    render nothing: true, status: 200
+  end
+
+  def play
+    media = params[:media]
+    vlc = VLC::Client.new('127.0.0.1', 9999)
+    vlc.connect unless vlc.connected?
+    vlc.play(media)
+
+    render nothing: true, status: 200
+  end
+
+  def time
+    vlc = VLC::Client.new('127.0.0.1', 9999)
+    vlc.connect unless vlc.connected?
+
+    render json: {seconds: vlc.time}
+  end
+
+  def seek
+    seconds = params[:seconds]
+    vlc = VLC::Client.new('127.0.0.1', 9999)
+    vlc.connect unless vlc.connected?
+    vlc.seek(seconds)
+
+    render json: {seconds: vlc.time}
   end
 
   # POST /episodes
@@ -65,11 +115,21 @@ class EpisodesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_episode
-      @episode = Episode.find(params[:id])
+      episode_id = params[:id] || params[:episode_id]
+      @episode = Episode.find(episode_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def episode_params
       params.require(:episode).permit(:episode, :title, :prod_code, :plot, :season_id)
     end
+
+    def vlc_client
+      @vlc_client ||= VLC::Client.new('localhost', 9999)
+    end
+
+    def vlc_system
+      @vlc_system ||= VLC::System.new
+    end
 end
+

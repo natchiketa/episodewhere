@@ -1,0 +1,346 @@
+@import "settings.scss";
+@import "mixins.scss";
+
+////////////////////////////////////////////////////////////////////////////////
+//  $CONTENTS
+////////////////////////////////////////////////////////////////////////////////
+//
+// Hit '*' with cursor on section name to jump there.
+//
+// -------------------------------------------------------------------------- //
+//
+// CONTENTS           You’re reading it!
+// POSITION_UTIL
+// MARGIN_AND_PADDING__UTIL
+// _DEFINED_MARGINS_AND_PADDINGS
+// SPLIT_PANE_LAYOUT
+//
+// _FLEX_ALIGN_JUSTIFY
+
+////////////////////////////////////////////////////////////////////////////////
+
+// -------------------------------------------------------------------------- //
+// $POSITION_UTIL
+// -------------------------------------------------------------------------- //
+
+.l-block {
+  display: block !important;
+}
+
+.l-iblock {
+  display: inline-block !important;
+}
+
+.l-posrel {
+  position: relative !important;
+}
+
+.l-posabs {
+  position: absolute !important;
+}
+
+.l-posfix {
+  position: fixed !important;
+}
+
+.l-pos-lt {
+  left: 0 !important;
+}
+
+.l-pos-rt {
+  right: 0 !important;
+}
+
+.l-pos-ctr {
+  top: 50% !important;
+  left: 50% !important;
+  @include transform(translate(-50%, -50%));
+}
+
+.l-pos-vtctr, .l-position-vertical-center {
+  top: 50% !important;
+  @include transform(translateY(-50%));
+}
+
+.l-pos-hzctr {
+  left: 50% !important;
+  @include transform(translateX(-50%));
+}
+
+.l-pos-tr {
+  top: 0 !important;
+  right: 0 !important;
+}
+
+.l-flt-left {
+  float: left !important;
+}
+
+.l-flt-right {
+  float: right !important;
+}
+
+// -------------------------------------------------------------------------- //
+// $MARGIN_AND_PADDING
+// -------------------------------------------------------------------------- //
+
+// -------------------------------------------------------------------------- //
+// - $MARGIN_AND_PADDING__UTIL
+// -------------------------------------------------------------------------- //
+$sizes: 0.0 0.2 0.4 0.5 1.0 1.5 2.0 2.5 3.0 4.0 5.0;
+@each $pad in $sizes {
+  $int: floor($pad);
+  $frac: floor(($pad - $int) * 10);
+
+  $units: em rem;
+  @each $unit in $units {
+    .l-pad-#{$int}_#{$frac}#{$unit} {
+      padding: #{$pad}#{$unit} !important;
+    }
+    .l-ltpad-#{$int}_#{$frac}#{$unit} {
+      padding-left: #{$pad}#{$unit} !important;
+    }
+    .l-rtpad-#{$int}_#{$frac}#{$unit} {
+      padding-right: #{$pad}#{$unit} !important;
+    }
+    .l-hpad-#{$int}_#{$frac}#{$unit} {
+      padding-left: #{$pad}#{$unit !important};
+      padding-right: #{$pad}#{$unit !important};
+    }
+    .l-vpad-#{$int}_#{$frac}#{$unit} {
+      padding-top: #{$pad}#{$unit !important};
+      padding-bottom: #{$pad}#{$unit !important};
+    }
+    .l-marg-#{$int}_#{$frac}#{$unit} {
+      margin: #{$pad}#{$unit !important};
+    }
+    .l-ltmarg-#{$int}_#{$frac}#{$unit} {
+      margin-left: #{$pad}#{$unit} !important;
+    }
+    .l-rtmarg-#{$int}_#{$frac}#{$unit} {
+      margin-right: #{$pad}#{$unit} !important;
+    }
+    .l-hmarg-#{$int}_#{$frac}#{$unit} {
+      margin-left: #{$pad}#{$unit !important};
+      margin-right: #{$pad}#{$unit !important};
+    }
+    .l-vmarg-#{$int}_#{$frac}#{$unit} {
+      margin-top: #{$pad}#{$unit !important};
+      margin-bottom: #{$pad}#{$unit !important};
+    }
+  }
+
+  // Height/Width rules
+  .l-ht-#{$int}_#{$frac}em {
+    height: #{$pad}em !important;
+  }
+
+  .l-wt-#{$int}_#{$frac}em {
+    width: #{$pad}em !important;
+  }
+
+  .l-ht-#{$int}_#{$frac}rem {
+    height: #{$pad}em !important;
+  }
+
+  .l-wt-#{$int}_#{$frac}rem {
+    width: #{$pad}em !important;
+  }
+}
+
+.l-horz-margin-auto {
+  margin: {
+    left: auto !important;
+    right: auto !important;
+  }
+}
+
+.l-nomarg {
+  margin: 0 !important;
+}
+
+.l-nopad {
+  padding: 0 !important;
+}
+
+// _DEFINED_MARGINS_AND_PADDINGS
+$props: margin padding;
+
+@each $preset in $spacingPresetNames {
+  $spacingPreset: nth($spacingPresets, index($spacingPresetNames, $preset));
+
+  @each $prop in $props {
+    $propAndPreset: if($preset == med, "#{$prop}", "#{$prop}-#{$preset}");
+    .l-top-#{$propAndPreset} {
+      #{$prop}: {
+        top: $spacingPreset !important;
+      }
+    }
+
+    .l-bottom-#{$propAndPreset} {
+      #{$prop}: {
+        bottom: $spacingPreset !important;
+      }
+    }
+
+    .l-#{$propAndPreset} {
+      #{$prop}: $spacingPreset !important;
+    }
+
+    .l-horz-#{$propAndPreset} {
+      #{$prop}: {
+        left: $spacingPreset !important;
+        right: $spacingPreset !important;
+      }
+    }
+
+    .l-vert-#{$propAndPreset} {
+      #{$prop}: {
+        top: $spacingPreset !important;
+        bottom: $spacingPreset !important;
+      }
+    }
+  }
+}
+
+.l-nomarg-with-footer {
+  & + footer {
+    margin-top: 0;
+  }
+}
+
+// BOX MODEL - UTILITY CLASSES
+.l-bbox {
+  box-sizing: border-box;
+}
+
+// FLEX LAYOUT - UTILITY CLASSES
+.l-columns, .l-cols {
+  display: flex;
+
+  &.l-columns-wrap {
+    flex-wrap: wrap;
+  }
+
+  &.l-columns--evenly-distributed {
+    justify-content: space-between;
+  }
+
+  &.l-columns--vertically-centered {
+    align-items: center;
+  }
+}
+
+.l-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.l-row {
+  flex: 1 auto;
+}
+
+.l-cols--ctr, .l-rows--ctr {
+  align-items: center;
+}
+
+@for $size from 1 through 10 {
+  .l-col-#{$size * 10}, .l-col-#{$size} {
+    flex: $size;
+  }
+  .l-row-#{$size * 10}, .l-row-#{$size} {
+    flex: $size;
+  }
+  .l-width-#{$size * 10}, .l-wt-#{$size * 10} {
+    width: #{"#{$size * 10}%"} !important;
+  }
+  .l-height-#{$size * 10}, .l-ht-#{$size * 10} {
+    height: #{"#{$size * 10}%"} !important;
+  }
+
+  .l-grow-#{$size} {
+    flex-grow: $size;
+  }
+}
+
+// -------------------------------------------------------------------------- //
+// $SPLIT_PANE_LAYOUT
+// -------------------------------------------------------------------------- //
+
+.l-split {
+  display: flex !important;
+
+  .l-split__pane {
+    flex-grow: 2;
+    flex-shrink: 1;
+    flex-basis: 0;
+    position: relative;
+    @include transition(flex-grow, 250ms, linear);
+
+    &.l-split__pane--active {
+      flex-grow: 5;
+    }
+
+    &:not(.l-split__pane--active)::after {
+      background-color: rgba(204,204,204,0.8);
+      pointer-events: auto;
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      @include transition(all, 500ms, linear);
+      background-color: rgba(0, 0, 0, 0.0);
+      pointer-events: none;
+    }
+  }
+}
+
+.l-narrow-body {
+  max-width: 50vw;
+  margin: 0px auto;
+  padding: 0 $spacingMed $spacingBig $spacingMed;
+  overflow: auto;
+  position: relative;
+}
+
+// _TEXT_UTILITY_CLASSES
+
+.l-txt-ctr {
+  text-align: center !important;
+}
+
+.l-txt-lt {
+  text-align: left !important;
+}
+
+.l-txt-rt {
+  text-align: right !important;
+}
+
+.l-txt-nowrap {
+  white-space: nowrap;
+}
+
+// _FLEX_ALIGN_JUSTIFY
+
+.l-start-center {
+  align-items: flex-start !important;
+  justify-content: center !important;
+}
+
+.l-center-center {
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.l-end-me {
+  align-self: flex-end !important;
+}
+

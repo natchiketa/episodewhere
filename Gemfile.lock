@@ -26,6 +26,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.1)
+    active_model_serializers (0.9.3)
+      activemodel (>= 3.2)
     activejob (4.2.2)
       activesupport (= 4.2.2)
       globalid (>= 0.3.0)
@@ -136,9 +138,6 @@ GEM
       pry-doc (~> 0.6)
       pry-git (~> 0.2)
       pry-remote (>= 0.1.7)
-    jbuilder (2.3.1)
-      activesupport (>= 3.0.0, < 5)
-      multi_json (~> 1.2)
     jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -179,6 +178,8 @@ GEM
       diffy
       grit
       pry (>= 0.9.8)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
@@ -229,6 +230,7 @@ GEM
     rake (10.4.2)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
+    retryable (1.3.6)
     rspec-core (3.3.1)
       rspec-support (~> 3.3.0)
     rspec-expectations (3.3.0)
@@ -273,6 +275,8 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    texticle (2.0)
+      activerecord (>= 3.0.0)
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
@@ -282,6 +286,8 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unicode_utils (1.4.0)
+    vlc-client (0.0.5)
+      retryable (~> 1.3)
     warden (1.2.3)
       rack (>= 1.0)
     web-console (2.1.3)
@@ -298,6 +304,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers (= 0.9.3)
   angularjs-rails
   angularjs-rails-resource (~> 2.0.0)
   annotate
@@ -314,13 +321,13 @@ DEPENDENCIES
   haml-rails
   html2haml
   jazz_fingers
-  jbuilder (~> 2.0)
   jquery-rails
   launchy
   multi_json
   peek
   pg
   pry-byebug
+  pry-rails
   puma
   quiet_assets
   rails (= 4.2.2)
@@ -334,7 +341,9 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   srt!
+  texticle (= 2.0)
   uglifier (>= 1.3.0)
+  vlc-client
   web-console (~> 2.0)
 
 BUNDLED WITH

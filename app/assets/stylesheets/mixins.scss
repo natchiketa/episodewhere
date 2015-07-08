@@ -1,0 +1,22 @@
+@mixin transition($e:all,$t:50ms,$f:ease) {
+  -moz-transition: $e $t $f;
+  -webkit-transition: $e $t $f;
+  transition: $e $t $f;
+}
+
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+
+@mixin size($size, $force: true) {
+  width: if($force, $size !important, $size);
+  height: if($force, $size !important, $size);
+  @if $force == true {
+    min-width: $size;
+    max-width: $size;
+  }
+}

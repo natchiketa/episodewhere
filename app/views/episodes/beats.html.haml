@@ -1,0 +1,27 @@
+%div{ng: {controller: "EpisodeBeatsController", init: "init(#{@episode.id});"}}
+  .l-cols.l-cols--ctr
+    .l-col-3
+      .l-padding
+        %h1 Beats for #{@episode.title}
+    .l-col-1
+      %button{ng: {click: 'connect()'}} Connect
+      %input{type: 'input', placeholder: 'media path (URL, file path)', ng: {model: 'media_path'}}
+      %button{ng: {click: 'play(media_path)'}} Play
+  .list
+    .list__item.l-cols.l-margin{ng: {_:'', repeat: 'beat in episode.scriptBeats', class: '{"list__item--active": beatIsActive(beat)}'}}
+      .l-col-1
+        %a{ng: {click: 'seek(beat.startTime)'}} {{beat.startTime}}
+      .l-col-4 {{beat.content}}
+      .l-col-2
+
+
+:coffeescript
+  window.requestAnimFrame = ( ->
+    window.requestAnimationFrame or
+    window.webkitRequestAnimationFrame or
+    window.mozRequestAnimationFrame or
+    window.oRequestAnimationFrame or
+    window.msRequestAnimationFrame or
+    (callback, element) ->
+      window.setTimeout(callback, 1000 / 60)
+  )()

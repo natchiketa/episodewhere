@@ -15,10 +15,12 @@
       %tr{"ng-repeat" => "episode in episodes"}
         %td {{episode.id}}
         %td {{episode.sequence}}
-        %td {{episode.title}}
+        %td
+          %a{href: "{{episode.id}}/beats"} {{episode.title}}
         %td {{episode.plot}}
         %td {{episode.season}}
 
 %br
 
 = link_to 'New Episode', new_episode_path
+

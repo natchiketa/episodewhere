@@ -6,7 +6,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
-gem 'jbuilder', '~> 2.0'
+# gem 'jbuilder', '~> 2.0'
+gem 'active_model_serializers', '0.9.3'
 
 gem 'angularjs-rails'
 gem 'angularjs-rails-resource', '~> 2.0.0'
@@ -27,9 +28,15 @@ gem 'pg'
 gem 'puma'
 
 gem 'multi_json'
+# Read from SRT (subtitle) files
 gem 'srt', github: 'cpetersen/srt'
 
+# Full text search for Postgres
+gem 'texticle', "2.0", :require => 'texticle/rails'
+
 group :development do
+  gem 'vlc-client'
+
   gem 'better_errors'
   gem 'html2haml'
   gem 'quiet_assets'
@@ -41,6 +48,7 @@ group :development do
   gem 'annotate'
   gem 'jazz_fingers'
   gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'binding_of_caller'
   gem 'rails-erd'
   gem 'rails-footnotes', '>= 4.0.0', '<5' # then command line $rails generate rails_footnotes:install
