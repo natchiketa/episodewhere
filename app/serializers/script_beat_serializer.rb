@@ -5,8 +5,7 @@ class ScriptBeatSerializer < ActiveModel::Serializer
     :content,
     :start_time,
     :end_time,
-    :episode_id
+    :episode_id,
+    :character_ids
 
-  # has_one :episode, embedded: true
-  has_many :characters, embedded: true
 end

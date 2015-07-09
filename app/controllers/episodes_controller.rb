@@ -21,6 +21,7 @@ class EpisodesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @episode }
+
     end
   end
 
@@ -94,7 +95,7 @@ class EpisodesController < ApplicationController
     respond_to do |format|
       if @episode.update(episode_params)
         format.html { redirect_to @episode, notice: 'Episode was successfully updated.' }
-        format.json { render :show, status: :ok, location: @episode }
+        format.json { render nothing: true, status: :ok }
       else
         format.html { render :edit }
         format.json { render json: @episode.errors, status: :unprocessable_entity }
@@ -121,7 +122,13 @@ class EpisodesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def episode_params
-      params.require(:episode).permit(:episode, :title, :prod_code, :plot, :season_id)
+      params.require(:episode).permit(
+        :episode,
+        :title,
+        :prod_code,
+        :plot,
+        :season_id
+      )
     end
 
     def vlc_client

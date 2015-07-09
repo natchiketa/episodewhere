@@ -6,5 +6,4 @@ class EpisodeSerializer < ActiveModel::Serializer
     :plot,
     :season
 
-  has_many :script_beats, embedded: true
 end

@@ -4,12 +4,26 @@ class ScriptBeatsController < ApplicationController
   # GET /script_beats
   # GET /script_beats.json
   def index
-    @script_beats = ScriptBeat.all
+    if params[:episode_id]
+      eid = Integer(params[:episode_id])
+      @script_beats = ScriptBeat.where(episode_id: eid)
+    else
+      @script_beats = ScriptBeat.all
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @script_beats }
+    end
   end
 
   # GET /script_beats/1
   # GET /script_beats/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @script_beat }
+    end
   end
 
   # GET /script_beats/new
@@ -41,12 +55,19 @@ class ScriptBeatsController < ApplicationController
   # PATCH/PUT /script_beats/1.json
   def update
     respond_to do |format|
-      if @script_beat.update(script_beat_params)
+      beat = script_beat_params
+      if beat[:character_ids]
+        beat[:characters] = beat[:character_ids].map do |cid|
+          Character.find(Integer(cid))
+        end
+      end
+
+      if @script_beat.update_attributes(beat)
         format.html { redirect_to @script_beat, notice: 'Script beat was successfully updated.' }
-        format.json { render :show, status: :ok, location: @script_beat }
+        format.json { render json: @script_beat, status: 202}
       else
         format.html { render :edit }
-        format.json { render json: @script_beat.errors, status: :unprocessable_entity }
+        format.json { render json: @script_beat, status: :unprocessable_entity }
       end
     end
   end
@@ -69,6 +90,18 @@ class ScriptBeatsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def script_beat_params
-      params.require(:script_beat).permit(:start_line, :beat_type, :content, :episode_id)
+      params.require(:script_beat).permit(
+        :start_line,
+        :beat_type,
+        :content,
+        :episode_id,
+        :start_time,
+        :end_time,
+        character_ids: [],
+        characters: [
+          :id,
+          :name
+        ]
+      )
     end
 end

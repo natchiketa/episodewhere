@@ -4,10 +4,30 @@
   $scope.init = (epId) ->
     console.log "Fetching episode_id: #{epId}"
     $scope.vlc_service = new Vlc(serverErrorHandler).service
+    $scope.beat_service = ScriptBeat
     Episode.get(epId).then( (ep) ->
       $scope.episode = ep
-      checkVLC()
+      # checkVLC()
+      ScriptBeat.query({episode_id: ep.id}).then((beats) -> $scope.beats = beats)
     )
+    Character.query().then( (characters) ->
+      $scope.characters = characters
+    )
+
+  $scope.hasCharacter = (beat, characterId) ->
+    characterId = parseInt(characterId)
+    charIdx = _.pluck(beat.characters, 'id').indexOf(characterId)
+    charIdx > -1
+
+  $scope.parseInt = parseInt
+
+  $scope.updateBeatCharacters = (beat) ->
+    beat.characterIds = _.map(
+      beat.characterIds,
+      (val) -> parseInt(val)
+    )
+    beat.update()
+
 
   $scope.connect = () ->
     $scope.vlc_service.connect({id: $scope.episode.id})

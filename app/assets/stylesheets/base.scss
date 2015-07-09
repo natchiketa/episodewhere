@@ -1,0 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
+option[selected], option[selected="selected"] {
+  background-color: lightgreen;
+}

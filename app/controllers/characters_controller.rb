@@ -5,6 +5,10 @@ class CharactersController < ApplicationController
   # GET /characters.json
   def index
     @characters = Character.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @characters }
+    end
   end
 
   # GET /characters/1

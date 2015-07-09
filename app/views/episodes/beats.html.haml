@@ -1,18 +1,29 @@
 %div{ng: {controller: "EpisodeBeatsController", init: "init(#{@episode.id});"}}
   .l-cols.l-cols--ctr
-    .l-col-3
+    .l-col-2
       .l-padding
         %h1 Beats for #{@episode.title}
-    .l-col-1
+    .l-col-2
       %button{ng: {click: 'connect()'}} Connect
       %input{type: 'input', placeholder: 'media path (URL, file path)', ng: {model: 'media_path'}}
       %button{ng: {click: 'play(media_path)'}} Play
   .list
-    .list__item.l-cols.l-margin{ng: {_:'', repeat: 'beat in episode.scriptBeats', class: '{"list__item--active": beatIsActive(beat)}'}}
+    .list__item.l-cols.l-margin{ng: {_:'', repeat: 'beat in beats', class: '{"list__item--active": beatIsActive(beat)}'}}
       .l-col-1
         %a{ng: {click: 'seek(beat.startTime)'}} {{beat.startTime}}
       .l-col-4 {{beat.content}}
       .l-col-2
+        %select{_:'',
+          "ng-model"        => "beat.characterIds",
+          "ng-change"       => 'updateBeatCharacters(beat)',
+          "ng-multiple"      => "true",
+          multiple: true}
+
+          %option{ng: {_:'',
+            value:    "character.id",
+            repeat:   "character in characters",
+            selected: "beat.characterIds.indexOf(''+character.id) > -1 || beat.characterIds.indexOf(character.id) > -1"}}
+            {{character.name}}
 
 
 :coffeescript
