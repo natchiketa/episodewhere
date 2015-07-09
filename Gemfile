@@ -9,6 +9,7 @@ gem 'jquery-rails'
 # gem 'jbuilder', '~> 2.0'
 gem 'active_model_serializers', '0.9.3'
 
+gem 'lodash-rails'
 gem 'angularjs-rails'
 gem 'angularjs-rails-resource', '~> 2.0.0'
 
