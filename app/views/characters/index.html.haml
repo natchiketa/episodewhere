@@ -1,20 +1,26 @@
-%h1 Listing characters
+%div{ng: {controller: 'CharactersIndexController', init: 'init();'}}
+  %h1 Listing characters
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th
-      %th
-      %th
-
-  %tbody
-    - @characters.each do |character|
+  %table.table.table-striped
+    %thead
       %tr
-        %td= character.name
-        %td= link_to 'Show', character
-        %td= link_to 'Edit', edit_character_path(character)
-        %td= link_to 'Destroy', character, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %th Name
+        %th
+
+    %tbody
+      %tr{ng: {repeat: 'character in characters'}}
+        %td
+          %input{_:'',
+            ng: {_:'',
+            model: 'character.name',
+            "model-options" => '{ debounce: 800 }',
+            change: 'character.update()'},
+            style: 'width: 25em;'}
+        %td
+          %button{ng: {click: 'remove(character)'}}
+            %i.glyphicon.glyphicon-remove
+        -# %td= link_to 'Show', character
+        -# %td= link_to 'Edit', edit_character_path(character)
 
 %br
 

@@ -12,6 +12,14 @@ gem 'active_model_serializers', '0.9.3'
 gem 'lodash-rails'
 gem 'angularjs-rails'
 gem 'angularjs-rails-resource', '~> 2.0.0'
+gem 'select2-rails'
+gem 'angular-ui-select-rails'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-ngInfiniteScroll'
+  gem 'rails-assets-angular-bootstrap'
+  # gem 'rails-assets-BOWER_PACKAGE_NAME'
+end
 
 group :development, :test do
   gem 'byebug'

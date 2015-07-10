@@ -57,6 +57,14 @@ class EpisodesController < ApplicationController
     render nothing: true, status: 200
   end
 
+  def pause
+    vlc = VLC::Client.new('127.0.0.1', 9999)
+    vlc.connect unless vlc.connected?
+    vlc.pause
+
+    render json: {seconds: vlc.time}
+  end
+
   def time
     vlc = VLC::Client.new('127.0.0.1', 9999)
     vlc.connect unless vlc.connected?

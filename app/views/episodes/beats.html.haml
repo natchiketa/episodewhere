@@ -1,29 +1,57 @@
 %div{ng: {controller: "EpisodeBeatsController", init: "init(#{@episode.id});"}}
-  .l-cols.l-cols--ctr
-    .l-col-2
-      .l-padding
-        %h1 Beats for #{@episode.title}
-    .l-col-2
-      %button{ng: {click: 'connect()'}} Connect
-      %input{type: 'input', placeholder: 'media path (URL, file path)', ng: {model: 'media_path'}}
-      %button{ng: {click: 'play(media_path)'}} Play
-  .list
-    .list__item.l-cols.l-margin{ng: {_:'', repeat: 'beat in beats', class: '{"list__item--active": beatIsActive(beat)}'}}
-      .l-col-1
-        %a{ng: {click: 'seek(beat.startTime)'}} {{beat.startTime}}
-      .l-col-4 {{beat.content}}
+  .l-width-100.l-pad-1_0em.solidbg{ew: {scrollclass: "stickyheader"}}
+    .l-cols.l-cols--ctr
       .l-col-2
-        %select{_:'',
-          "ng-model"        => "beat.characterIds",
-          "ng-change"       => 'updateBeatCharacters(beat)',
-          "ng-multiple"      => "true",
-          multiple: true}
+        %h1.l-nomarg <small>Beats for</small> #{@episode.title}
+    .l-cols.l-cols--ctr.l-top-margin{style: "align-items: center;"}
+      .l-hmarg-0_5em
+        %button.btn.btn-primary.btn-lg{ng: {click: 'connect()'}}
+          %i.glyphicon.glyphicon-off
+          %span.l-hpad-0_5em Connect
+      .l-hmarg-0_5em
+        %button.btn.btn-success.btn-lg{ng: {click: 'play(media_path)'}}
+          %i.glyphicon.glyphicon-play
+          %span.l-hpad-0_5em Play
+      .l-col-4.l-hmarg-0_5em
+        %input.form-control.input-lg{type: 'input', placeholder: 'media path (URL, file path)', ng: {model: 'media_path'}}
+    .l-cols.l-cols--ctr.l-top-margin{style: "align-items: center;"}
+      .l-hmarg-0_5em.l-col-1{ng: {repeat: 'preset in [0,1,2,3,4,5] track by $index'}}
+        %span.label.label-primary Ctrl-{{$index+1}}
+        %ui-select{"ng-disabled" => "disabled", "ng-model" => "speedCast[$index].selected", :style => "width: 100%;", :theme => "bootstrap"}
+          %ui-select-match{:placeholder => "Select character..."} {{$select.selected.name}}
+          %ui-select-choices{:repeat => "character in characters | filter: $select.search"}
+            %span{"ng-bind-html" => "character.name | highlight: $select.search"}
 
-          %option{ng: {_:'',
-            value:    "character.id",
-            repeat:   "character in characters",
-            selected: "beat.characterIds.indexOf(''+character.id) > -1 || beat.characterIds.indexOf(character.id) > -1"}}
-            {{character.name}}
+  .list{ew: {lazyfetch: 'fetchBeats'},
+    ng: {keydown: 'onKey($event)'}}
+    .list__item.l-cols.l-vpad-0_5em.l-hpad-1_0em.l-center-start.list__item--striped{ng: {_:'',
+      repeat: 'beat in beats',
+      class: '{"list__item--active": beatIsActive(beat)}',
+      click: 'toggleBeat(beat, $event)'}}
+      .l-col-1.l-hpad-0_5em
+        %a{ng: {click: 'seek(beat.startTime)', bind: 'timestamp(beat.startTime)'}}
+      .l-col-4.l-hpad-0_5em{ng: {if: 'expandedBeatId !== beat.id'}} {{beat.content}}
+      .l-col-4{ng: {if: 'expandedBeatId == beat.id'}}
+        %input.form-control.l-width-100{ng: {model: 'beat.content', "model-options" => '{debounce: 800}', change: 'beat.update()'}}
+      .l-col-2.l-hpad-0_5em{ng: {if: 'expandedBeatId !== beat.id'}}
+        %span.l-hmarg-0_2em.label.label-success{ng: {repeat: 'character in beat.characters'}}
+          {{character.name}}
+      .l-col-2.l-hpad-0_5em{ng: {if: 'expandedBeatId == beat.id', click: '$event.preventDefault()'}}
+        %ui-select{_:'',
+          id: "beat{{beat.id}}",
+          multiple: "multiple",
+          autofocus: "true",
+          ng: {_:'',
+            disabled: "disabled",
+            model: "beat.characters"},
+          on: {remove: 'beat.update()', select: 'beat.update()' },
+          style: "width: 100%;",
+          theme: "select2"}
+          %ui-select-match{:placeholder => "Select character..."} {{$item.name}}
+          %ui-select-choices{:repeat => "character in characters | filter: {name: $select.search}"}
+            %div{"ng-bind-html" => "character.name | highlight: $select.search"}
+    .list__item
+      %button.btn-primary{ng: {click: 'fetchBeats(10)'}} Fetch More
 
 
 :coffeescript

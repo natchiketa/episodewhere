@@ -10,6 +10,10 @@
           method: 'GET'
           isArray: false
           params: {id: null, action: 'play', media: null}
+        pause:
+          method: 'GET'
+          isArray: false
+          params: {id: null, action: 'pause'}
         time:
           method: 'GET'
           isArray: false

@@ -1,13 +1,32 @@
+@import "settings.scss";
+@import "mixins.scss";
+
 .list {
-  
+
 }
 
 .list__item {
   display: flex;
 }
 
+.list__item--striped {
+  &:nth-child(odd) {
+    background-color: $mainStripe;
+  }
+}
+
 .list__item--active {
   background-color: rgba(255, 255, 127, 0.3);
 }
 
+.stickyheader {
+  position: fixed;
+  top: 0;
+  box-shadow: 0 0 1em 0.5em rgba(0, 0, 0, 0.2);
+  z-index: 1
+}
+
+.solidbg {
+  background-color: $mainBg;
+}
 

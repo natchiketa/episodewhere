@@ -15,7 +15,12 @@
 //= require lodash
 //= require angular
 //= require angular-resource
+//= require angular-sanitize
 //= require angularjs/rails/resource
+//= require select2
+//= require angular-ui-select
+//= require angular-bootstrap
+//= require ngInfiniteScroll
 //= require app
 //= require_tree .
 

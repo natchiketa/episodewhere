@@ -335,6 +335,11 @@ $props: margin padding;
   justify-content: center !important;
 }
 
+.l-center-start {
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
 .l-center-center {
   align-items: center !important;
   justify-content: center !important;

@@ -4,12 +4,13 @@ class ScriptBeatsController < ApplicationController
   # GET /script_beats
   # GET /script_beats.json
   def index
-    if params[:episode_id]
-      eid = Integer(params[:episode_id])
-      @script_beats = ScriptBeat.where(episode_id: eid)
-    else
-      @script_beats = ScriptBeat.all
-    end
+    limit  = params[:limit_to]   ? Integer(params[:limit_to])   : ScriptBeat.count
+    offset = params[:skip_to]    ? Integer(params[:skip_to])    : 0
+    clause = params[:episode_id] ? "episode_id = #{params[:episode_id]}" : "1=1"
+
+    @script_beats = ScriptBeat.where(clause)
+      .limit(limit)
+      .offset(offset)
 
     respond_to do |format|
       format.html
@@ -56,9 +57,9 @@ class ScriptBeatsController < ApplicationController
   def update
     respond_to do |format|
       beat = script_beat_params
-      if beat[:character_ids]
-        beat[:characters] = beat[:character_ids].map do |cid|
-          Character.find(Integer(cid))
+      if beat[:characters]
+        beat[:characters].map! do |char|
+          Character.find(char[:id])
         end
       end
 
@@ -97,7 +98,6 @@ class ScriptBeatsController < ApplicationController
         :episode_id,
         :start_time,
         :end_time,
-        character_ids: [],
         characters: [
           :id,
           :name

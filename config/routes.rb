@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   resources :episodes do
     get 'beats', action: :beats, as: :beats
     get 'beats/vlc/connect', action: :connect, as: :connect
-    get 'beats/vlc/play', action: :play, as: :play
-    get 'beats/vlc/time', action: :time, as: :time
-    get 'beats/vlc/seek', action: :seek, as: :seek
+    get 'beats/vlc/play',  action: :play,  as: :play
+    get 'beats/vlc/pause', action: :pause, as: :pause
+    get 'beats/vlc/time',  action: :time,  as: :time
+    get 'beats/vlc/seek',  action: :seek,  as: :seek
   end
 
   resources :seasons
