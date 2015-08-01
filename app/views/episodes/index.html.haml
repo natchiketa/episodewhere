@@ -1,25 +1,21 @@
 %h1 Listing episodes
 
 %div{"ng-controller" => "EpisodesIndexController"}
-  %table
+  %table.table.table-striped
     %thead
       %tr
-        %th id
-        %th sequence
+        %th sXXeXX
         %th title
         %th prod_code
         %th plot
-        %th season
 
     %tbody
-      %tr{"ng-repeat" => "episode in episodes"}
-        %td {{episode.id}}
-        %td {{episode.sequence}}
+      %tr{"ng-repeat" => "episode in episodes", data: {epid: '{{episode.id}}'}}
+        %td s{{episode.season.sequence}}e{{episode.sequence}}
         %td
           %a{href: "{{episode.id}}/beats"} {{episode.title}}
+        %td {{episode.prod_code}}
         %td {{episode.plot}}
-        %td {{episode.season}}
-
 %br
 
 = link_to 'New Episode', new_episode_path

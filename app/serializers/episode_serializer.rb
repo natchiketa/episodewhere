@@ -6,4 +6,7 @@ class EpisodeSerializer < ActiveModel::Serializer
     :plot,
     :season
 
+  def sequence
+    object.sequence.to_s.rjust(2, '0')
+  end
 end
