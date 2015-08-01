@@ -6,6 +6,13 @@ class SeasonsController < ApplicationController
   # GET /seasons.json
   def index
     @seasons = Season.all
+
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: @seasons, each_serializer: SeasonSerializer
+      }
+    end
   end
 
   # GET /seasons/1
